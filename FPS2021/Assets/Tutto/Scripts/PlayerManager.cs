@@ -62,28 +62,24 @@ public class PlayerManager : MonoBehaviour
                         //Right
                         if (m_inputManager.runRight)
                         {
-                            transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
                             m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
                         }
 
                         //Left
-                        if (m_inputManager.runLeft)
+                        else if (m_inputManager.runLeft)
                         {
-                            transform.eulerAngles = new Vector3(0.0f, 270.0f, 0.0f);
                             m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
                         }
 
                         //Up
-                        if (m_inputManager.runUp)
+                        else if (m_inputManager.runUp)
                         {
-                            transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
                             m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
                         }
 
                         //Down
-                        if (m_inputManager.runDown)
+                        else if (m_inputManager.runDown)
                         {
-                            transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
                             m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
                         }
                     }
@@ -97,28 +93,24 @@ public class PlayerManager : MonoBehaviour
                         //Right
                         if (m_inputManager.runRight)
                         {
-                            transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
                             m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
                         }
 
                         //Left
                         if (m_inputManager.runLeft)
                         {
-                            transform.eulerAngles = new Vector3(0.0f, 270.0f, 0.0f);
                             m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
                         }
 
                         //Up
                         if (m_inputManager.runUp)
                         {
-                            transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
                             m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
                         }
 
                         //Down
                         if (m_inputManager.runDown)
                         {
-                            transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
                             m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
                         }
                     }

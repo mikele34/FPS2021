@@ -79,7 +79,7 @@ public class inputManager : MonoBehaviour
             runDown = false;
         }
 
-        //Run
+        //Walk
         if (Keyboard.current.shiftKey.isPressed || GP_run)
         {
             walk = true;
