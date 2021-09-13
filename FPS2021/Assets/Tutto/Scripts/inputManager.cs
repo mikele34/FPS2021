@@ -7,8 +7,9 @@ public class inputManager : MonoBehaviour
     [HideInInspector] public bool runLeft = false;
     [HideInInspector] public bool runUp = false;
     [HideInInspector] public bool runDown = false;
-    [HideInInspector] public bool attack = false;
     [HideInInspector] public bool walk = false;
+    [HideInInspector] public bool crouch = false;
+    [HideInInspector] public bool attack = false;
     [HideInInspector] public bool interact = false;
     [HideInInspector] public bool pause = false;
     
@@ -21,7 +22,8 @@ public class inputManager : MonoBehaviour
         bool GP_updpad = false;
         bool GP_downdpad = false;
         bool GP_shoot = false;
-        bool GP_run = false;
+        bool GP_walk = false;
+        bool GP_crounch = false;
         bool GP_interact = false;
         bool GP_escape = false;
         
@@ -32,8 +34,9 @@ public class inputManager : MonoBehaviour
             GP_rightdpad = Gamepad.all[0].dpad.right.isPressed;
             GP_updpad = Gamepad.all[0].dpad.up.isPressed;
             GP_downdpad = Gamepad.all[0].dpad.down.isPressed;
-            
-            GP_run = Gamepad.all[0].aButton.isPressed;
+            GP_walk = Gamepad.all[0].aButton.isPressed;
+            GP_crounch = Gamepad.all[0].leftStickButton.isPressed;
+
             GP_shoot = Gamepad.all[0].xButton.wasPressedThisFrame;
             GP_interact = Gamepad.all[0].bButton.wasPressedThisFrame;
             GP_interact = Gamepad.all[0].startButton.wasPressedThisFrame;
@@ -80,13 +83,23 @@ public class inputManager : MonoBehaviour
         }
 
         //Walk
-        if (Keyboard.current.shiftKey.isPressed || GP_run)
+        if (Keyboard.current.shiftKey.isPressed || GP_walk)
         {
             walk = true;
         }
         else
         {
             walk = false;
+        }
+
+        //Crouch
+        if (Keyboard.current.leftCtrlKey.isPressed || GP_rightdpad)
+        {
+            crouch = true;
+        }
+        else
+        {
+            crouch = false;
         }
 
         //Attack
