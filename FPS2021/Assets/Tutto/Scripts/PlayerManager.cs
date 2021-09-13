@@ -51,6 +51,7 @@ public class PlayerManager : MonoBehaviour
             case PlayerManager.State.Move:
 
                 //Moviment
+                #region Moviment
                 if (m_inputManager.runLeft || m_inputManager.runRight || m_inputManager.runUp || m_inputManager.runDown)
                 {
                     #region Run
@@ -120,9 +121,11 @@ public class PlayerManager : MonoBehaviour
                 {
                     m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
                 }
-            //Attack
-            #region Attack
-            if (m_inputManager.attack)
+                #endregion
+
+                //Attack
+                #region Attack
+                if (m_inputManager.attack)
             {
                 //m_animator.Play("Attack");
                 m_state = PlayerManager.State.Attack;
