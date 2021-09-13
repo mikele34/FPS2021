@@ -50,78 +50,84 @@ public class PlayerManager : MonoBehaviour
             //Move
             case PlayerManager.State.Move:
 
-            //Moviment
-            #region Run
-                if (!m_inputManager.walk)
+                //Moviment
+                if (m_inputManager.runLeft || m_inputManager.runRight || m_inputManager.runUp || m_inputManager.runDown)
                 {
-                    //m_animator.Play("Run");
-                    speed = runspeed;
-
-                    //Right
-                    if (m_inputManager.runRight)
+                    #region Run
+                    if (!m_inputManager.walk)
                     {
-                        transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
-                        m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
+                        //m_animator.Play("Run");
+                        speed = runspeed;
+
+                        //Right
+                        if (m_inputManager.runRight)
+                        {
+                            transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+                            m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
+                        }
+
+                        //Left
+                        if (m_inputManager.runLeft)
+                        {
+                            transform.eulerAngles = new Vector3(0.0f, 270.0f, 0.0f);
+                            m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
+                        }
+
+                        //Up
+                        if (m_inputManager.runUp)
+                        {
+                            transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
+                        }
+
+                        //Down
+                        if (m_inputManager.runDown)
+                        {
+                            transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
+                        }
                     }
-
-                    //Left
-                    if (m_inputManager.runLeft)
+                    #endregion
+                    #region Walk
+                    else
                     {
-                        transform.eulerAngles = new Vector3(0.0f, 270.0f, 0.0f);
-                        m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
+                        //m_animator.Play("Walk");
+                        speed = walkspeed;
+
+                        //Right
+                        if (m_inputManager.runRight)
+                        {
+                            transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+                            m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
+                        }
+
+                        //Left
+                        if (m_inputManager.runLeft)
+                        {
+                            transform.eulerAngles = new Vector3(0.0f, 270.0f, 0.0f);
+                            m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
+                        }
+
+                        //Up
+                        if (m_inputManager.runUp)
+                        {
+                            transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
+                        }
+
+                        //Down
+                        if (m_inputManager.runDown)
+                        {
+                            transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
+                        }
                     }
-
-                    //Up
-                    if (m_inputManager.runUp)
-                    {
-                        transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
-                        m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
-                    }
-
-                    //Down
-                    if (m_inputManager.runDown)
-                    {
-                        transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
-                        m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
-                    }                        
+                    #endregion
                 }
-            #endregion
-            #region Walk
-            else
-            {                        
-                //m_animator.Play("Walk");
-                speed = walkspeed;
-
-                //Right
-                if (m_inputManager.runRight)
+                else
                 {
-                    transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
-                    m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
+                    m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
                 }
-
-                //Left
-                if (m_inputManager.runLeft)
-                {
-                    transform.eulerAngles = new Vector3(0.0f, 270.0f, 0.0f);
-                    m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
-                }
-
-                //Up
-                if (m_inputManager.runUp)
-                {
-                    transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
-                    m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
-                }
-
-                //Down
-                if (m_inputManager.runDown)
-                {
-                    transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
-                    m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
-                }                        
-            }
-            #endregion
-
             //Attack
             #region Attack
             if (m_inputManager.attack)
