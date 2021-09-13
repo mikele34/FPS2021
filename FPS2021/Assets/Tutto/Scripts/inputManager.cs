@@ -3,12 +3,12 @@ using UnityEngine.InputSystem;
 
 public class inputManager : MonoBehaviour
 {
-    [HideInInspector] public bool walkRight = false;
-    [HideInInspector] public bool walkLeft = false;
-    [HideInInspector] public bool walkUp = false;
-    [HideInInspector] public bool walkDown = false;
+    [HideInInspector] public bool runRight = false;
+    [HideInInspector] public bool runLeft = false;
+    [HideInInspector] public bool runUp = false;
+    [HideInInspector] public bool runDown = false;
     [HideInInspector] public bool attack = false;
-    [HideInInspector] public bool run = false;
+    [HideInInspector] public bool walk = false;
     [HideInInspector] public bool interact = false;
     [HideInInspector] public bool pause = false;
     
@@ -42,51 +42,51 @@ public class inputManager : MonoBehaviour
         //Right
         if(Keyboard.current.dKey.isPressed || GP_rightdpad)
         {
-            walkRight = true;
+            runRight = true;
         }
         else
         {
-            walkRight = false;
+            runRight = false;
         }
 
         //Left
         if (Keyboard.current.aKey.isPressed || GP_leftdpad)
         {
-            walkLeft = true;
+            runLeft = true;
         }
         else
         {
-            walkLeft = false;
+            runLeft = false;
         }
 
         //Up
         if (Keyboard.current.wKey.isPressed || GP_updpad)
         {
-            walkUp = true;
+            runUp = true;
         }
         else
         {
-            walkUp = false;
+            runUp = false;
         }
 
         //Down
         if (Keyboard.current.sKey.isPressed || GP_downdpad)
         {
-            walkDown = true;
+            runDown = true;
         }
         else
         {
-            walkDown = false;
+            runDown = false;
         }
 
         //Run
         if (Keyboard.current.shiftKey.isPressed || GP_run)
         {
-            run = true;
+            walk = true;
         }
         else
         {
-            run = false;
+            walk = false;
         }
 
         //Attack
