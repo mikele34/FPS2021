@@ -50,113 +50,104 @@ public class PlayerManager : MonoBehaviour
             //Move
             case PlayerManager.State.Move:
 
-                //Moviment
-                if (m_inputManager.runLeft && m_inputManager.runRight && m_inputManager.runUp && m_inputManager.runDown)
+            //Moviment
+            #region Run
+                if (!m_inputManager.walk)
                 {
-                    #region Run
-                    if (!m_inputManager.walk)
+                    //m_animator.Play("Run");
+                    speed = runspeed;
+
+                    //Right
+                    if (m_inputManager.runRight)
                     {
-                        //m_animator.Play("Run");
-                        speed = runspeed;
-
-                        //Right
-                        if (m_inputManager.runRight)
-                        {
-                            transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
-                            m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
-                        }
-
-                        //Left
-                        if (m_inputManager.runLeft)
-                        {
-                            transform.eulerAngles = new Vector3(0.0f, 270.0f, 0.0f);
-                            m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
-                        }
-
-                        //Up
-                        if (m_inputManager.runUp)
-                        {
-                            transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
-                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
-                        }
-
-                        //Down
-                        if (m_inputManager.runDown)
-                        {
-                            transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
-                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
-                        }
-                        #endregion
+                        transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+                        m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
                     }
-                    else
+
+                    //Left
+                    if (m_inputManager.runLeft)
                     {
-                        #region Walk
-                        //m_animator.Play("Walk");
-                        speed = walkspeed;
-
-                        //Right
-                        if (m_inputManager.runRight)
-                        {
-                            transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
-                            m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
-                        }
-
-                        //Left
-                        if (m_inputManager.runLeft)
-                        {
-                            transform.eulerAngles = new Vector3(0.0f, 270.0f, 0.0f);
-                            m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
-                        }
-
-                        //Up
-                        if (m_inputManager.runUp)
-                        {
-                            transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
-                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
-                        }
-
-                        //Down
-                        if (m_inputManager.runDown)
-                        {
-                            transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
-                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
-                        }
-                        #endregion
+                        transform.eulerAngles = new Vector3(0.0f, 270.0f, 0.0f);
+                        m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
                     }
+
+                    //Up
+                    if (m_inputManager.runUp)
+                    {
+                        transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+                        m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
+                    }
+
+                    //Down
+                    if (m_inputManager.runDown)
+                    {
+                        transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                        m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
+                    }                        
                 }
-                else
+            #endregion
+            #region Walk
+            else
+            {                        
+                //m_animator.Play("Walk");
+                speed = walkspeed;
+
+                //Right
+                if (m_inputManager.runRight)
                 {
-                    //m_animator.Play("Idle");
-                    m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
-                    if (m_inputManager.pause)
-                    {
-                        //Pause.SetActive(true);
-                    }
+                    transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+                    m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
                 }
 
-                //Attack
-                if (m_inputManager.attack)
+                //Left
+                if (m_inputManager.runLeft)
                 {
-                    //m_animator.Play("Attack");
-                    m_state = PlayerManager.State.Attack;
+                    transform.eulerAngles = new Vector3(0.0f, 270.0f, 0.0f);
+                    m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
                 }
 
-                break;
+                //Up
+                if (m_inputManager.runUp)
+                {
+                    transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+                    m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
+                }
+
+                //Down
+                if (m_inputManager.runDown)
+                {
+                    transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                    m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
+                }                        
+            }
+            #endregion
+
+            //Attack
+            #region Attack
+            if (m_inputManager.attack)
+            {
+                //m_animator.Play("Attack");
+                m_state = PlayerManager.State.Attack;
+            }
+
+            break;
 
            
-            //Attack
-            case PlayerManager.State.Attack:
+        //Attack
+        case PlayerManager.State.Attack:
 
-                m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
 
-                /*if (m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-                {
-                    m_state = PlayerManager.State.Move;
-                }*/
+            /*if (m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
+                m_state = PlayerManager.State.Move;
+            }*/
 
-                break;
+            break;
+            #endregion
 
             //Hit
+            #region Hit
             case PlayerManager.State.Hit:                 
 
                 /*if(m_animator.GetCurrentAnimatorStateInfo(0).IsName("Hit") && m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
@@ -165,8 +156,10 @@ public class PlayerManager : MonoBehaviour
                 }*/
 
                 break;
+            #endregion
 
             //Death
+            #region Death
             case PlayerManager.State.Death:
 
                 death = true;
@@ -179,8 +172,9 @@ public class PlayerManager : MonoBehaviour
                 }
                 */
                 break;
+                #endregion
         }
-        
+
     }
 
     /*void OnCollisionEnter(Collision collision)
