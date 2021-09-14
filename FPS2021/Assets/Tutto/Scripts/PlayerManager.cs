@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
@@ -22,7 +23,13 @@ public class PlayerManager : MonoBehaviour
     float speed = 300.0f;
 
     [Header("Shooting")]
-    public float shotRatio = 0.2f;    
+    public float shotRatio = 0.2f;
+
+    [Header("Mouse Settings")]
+    public float mouseSensitivity = 10.0f;
+
+    [Header("Camera Settings")]
+    public Transform mainCamera;
 
     int m_hitPoint = 0;
 
@@ -33,10 +40,12 @@ public class PlayerManager : MonoBehaviour
 
     public bool death = false;
 
-
+    float m_RotX = 0.0f;
 
     void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
         m_inputManager = GameObject.Find("inputManager").GetComponent<inputManager>();
 
         m_rigidbody = GetComponent<Rigidbody>();
@@ -45,6 +54,15 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        // Rotazione corpo
+        transform.Rotate(0.0f, Input.GetAxis("Mouse X") * mouseSensitivity, 0.0f);
+        
+        // Rotazione testa
+        m_RotX = m_RotX + -Input.GetAxis("Mouse Y") * mouseSensitivity;
+        m_RotX = Mathf.Clamp(m_RotX, -50.0f, 50.0f);
+        mainCamera.localEulerAngles = new Vector3(m_RotX, 0.0f, 0.0f);
+
+        #region StateMachine
         switch (m_state)
         {
             //Move
@@ -63,28 +81,29 @@ public class PlayerManager : MonoBehaviour
                         //Right
                         if (m_inputManager.runRight)
                         {
-                            m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
+                            m_rigidbody.velocity += transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
                         }
 
                         //Left
                         else if (m_inputManager.runLeft)
                         {
-                            m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
+                            m_rigidbody.velocity += transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
                         }
 
-                        //Up
-                        else if (m_inputManager.runUp)
+                        //Forward
+                        else if (m_inputManager.runForward)
                         {
-                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
+                            m_rigidbody.velocity += transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
                         }
 
-                        //Down
-                        else if (m_inputManager.runDown)
+                        //Back
+                        else if (m_inputManager.runBack)
                         {
-                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
+                            m_rigidbody.velocity += transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
                         }
                     }
                     #endregion
+
                     #region Walk
                     else
                     {
@@ -94,25 +113,25 @@ public class PlayerManager : MonoBehaviour
                         //Right
                         if (m_inputManager.runRight)
                         {
-                            m_rigidbody.velocity = new Vector3(speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
+                            m_rigidbody.velocity += transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
                         }
 
                         //Left
                         if (m_inputManager.runLeft)
                         {
-                            m_rigidbody.velocity = new Vector3(-speed * Time.fixedDeltaTime, m_rigidbody.velocity.y, 0.0f);
+                            m_rigidbody.velocity += transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
                         }
 
-                        //Up
-                        if (m_inputManager.runUp)
+                        //Forward
+                        if (m_inputManager.runForward)
                         {
-                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, speed * Time.fixedDeltaTime);
+                            m_rigidbody.velocity += transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
                         }
 
-                        //Down
-                        if (m_inputManager.runDown)
+                        //Back
+                        if (m_inputManager.runBack)
                         {
-                            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, -speed * Time.fixedDeltaTime);
+                            m_rigidbody.velocity += transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
                         }
                     }
                     #endregion
@@ -175,7 +194,7 @@ public class PlayerManager : MonoBehaviour
                 break;
                 #endregion
         }
-
+        #endregion
     }
 
     /*void OnCollisionEnter(Collision collision)

@@ -5,8 +5,8 @@ public class inputManager : MonoBehaviour
 {
     [HideInInspector] public bool runRight = false;
     [HideInInspector] public bool runLeft = false;
-    [HideInInspector] public bool runUp = false;
-    [HideInInspector] public bool runDown = false;
+    [HideInInspector] public bool runForward = false;
+    [HideInInspector] public bool runBack = false;
     [HideInInspector] public bool walk = false;
     [HideInInspector] public bool crouch = false;
     [HideInInspector] public bool attack = false;
@@ -16,6 +16,7 @@ public class inputManager : MonoBehaviour
 
     void Update()
     {
+        #region Gamapad
         //Setup
         bool GP_leftdpad = false;
         bool GP_rightdpad = false;
@@ -41,9 +42,13 @@ public class inputManager : MonoBehaviour
             GP_interact = Gamepad.all[0].bButton.wasPressedThisFrame;
             GP_interact = Gamepad.all[0].startButton.wasPressedThisFrame;
         }
+        #endregion
 
+        #region Keyboard
+
+        #region Moviment
         //Right
-        if(Keyboard.current.dKey.isPressed || GP_rightdpad)
+        if (Keyboard.current.dKey.isPressed || GP_rightdpad)
         {
             runRight = true;
         }
@@ -65,21 +70,21 @@ public class inputManager : MonoBehaviour
         //Up
         if (Keyboard.current.wKey.isPressed || GP_updpad)
         {
-            runUp = true;
+            runForward = true;
         }
         else
         {
-            runUp = false;
+            runForward = false;
         }
 
         //Down
         if (Keyboard.current.sKey.isPressed || GP_downdpad)
         {
-            runDown = true;
+            runBack = true;
         }
         else
         {
-            runDown = false;
+            runBack = false;
         }
 
         //Walk
@@ -101,7 +106,9 @@ public class inputManager : MonoBehaviour
         {
             crouch = false;
         }
+        #endregion
 
+        #region Attack
         //Attack
         if (Mouse.current.leftButton.wasPressedThisFrame || GP_shoot)
         {
@@ -111,7 +118,9 @@ public class inputManager : MonoBehaviour
         {
             attack = false;
         }
-        
+        #endregion
+
+        #region Interact
         //Interact
         if (Keyboard.current.eKey.wasPressedThisFrame || GP_interact)
         {
@@ -121,7 +130,9 @@ public class inputManager : MonoBehaviour
         {
             interact = false;
         }
+        #endregion
 
+        #region Pause
         //Pause
         if (Keyboard.current.escapeKey.isPressed || GP_escape)
         {
@@ -131,5 +142,8 @@ public class inputManager : MonoBehaviour
         {
             pause = false;
         }
+        #endregion
+
+        #endregion
     }
 }
