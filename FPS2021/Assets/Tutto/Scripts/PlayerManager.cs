@@ -40,6 +40,7 @@ public class PlayerManager : MonoBehaviour
     //Int
     #region Int
     //int m_hitPoint = 0;
+    int layerMask = 1 << 6;
     #endregion
 
     //Bool
@@ -73,6 +74,19 @@ public class PlayerManager : MonoBehaviour
         m_RotX = m_RotX + -Input.GetAxis("Mouse Y") * mouseSensitivity;
         m_RotX = Mathf.Clamp(m_RotX, -50.0f, 50.0f);
         mainCamera.localEulerAngles = new Vector3(m_RotX, 0.0f, 0.0f);
+        #endregion
+
+        #region Jump
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), layerMask) && !m_inputManager.jump)
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down)* 10, Color.blue);
+            Debug.Log("Ground");
+        }
+        else
+        {
+
+        }
         #endregion
 
         #region StateMachine

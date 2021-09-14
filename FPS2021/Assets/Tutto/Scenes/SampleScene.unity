@@ -311,8 +311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0dbd3a0eb786f1418858c575e6d3b4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkspeed: 300
-  runspeed: 350
+  walkspeed: 100
+  runspeed: 150
   shotRatio: 0.2
   mouseSensitivity: 10
   mainCamera: {fileID: 1927735023}
@@ -350,6 +350,7 @@ MonoBehaviour:
   runForward: 0
   runBack: 0
   walk: 0
+  jump: 0
   crouch: 0
   attack: 0
   interact: 0
@@ -380,9 +381,9 @@ GameObject:
   - component: {fileID: 1041214245}
   - component: {fileID: 1041214244}
   - component: {fileID: 1041214243}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain
-  m_TagString: Terrain
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
