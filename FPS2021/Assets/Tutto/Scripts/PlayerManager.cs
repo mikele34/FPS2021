@@ -24,6 +24,7 @@ public class PlayerManager : MonoBehaviour
     [Header("Movement")]
     public float walkspeed = 300.0f;
     public float runspeed = 350.0f;
+    public int jumpForce = 100;
     float speed = 300.0f;
 
     [Header("Shooting")]
@@ -40,7 +41,7 @@ public class PlayerManager : MonoBehaviour
     //Int
     #region Int
     //int m_hitPoint = 0;
-    int layerMask = 1 << 6;
+    int layerMask = 1 << 6;    
     #endregion
 
     //Bool
@@ -57,6 +58,7 @@ public class PlayerManager : MonoBehaviour
     void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         m_inputManager = GameObject.Find("inputManager").GetComponent<inputManager>();
 
@@ -77,10 +79,12 @@ public class PlayerManager : MonoBehaviour
         #endregion
 
         #region Jump
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), layerMask) && !m_inputManager.jump)
+
+        if(Physics.Raycast(transform.position, Vector3.down, 2.1f, layerMask) && m_inputManager.jump)
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down)* 10, Color.blue);
+            m_rigidbody.AddForce(new Vector3(transform.position.x, jumpForce, transform.position.z));
+
+            Debug.DrawRay(transform.position, Vector3.down, Color.blue);
             Debug.Log("Ground");
         }
         else
@@ -95,88 +99,87 @@ public class PlayerManager : MonoBehaviour
             //Move
             case PlayerManager.State.Move:
 
-                //Moviment
-                #region Moviment
-                if (m_inputManager.runLeft || m_inputManager.runRight || m_inputManager.runForward || m_inputManager.runBack)
+            //Moviment
+            #region Moviment
+            if (m_inputManager.runLeft || m_inputManager.runRight || m_inputManager.runForward || m_inputManager.runBack)
+            {
+                #region Run
+                if (!m_inputManager.walk)
                 {
-                    #region Run
-                    if (!m_inputManager.walk)
+                    //m_animator.Play("Run");
+                    speed = runspeed;
+
+                    //Right
+                    if (m_inputManager.runRight)
                     {
-                        //m_animator.Play("Run");
-                        speed = runspeed;
-
-                        //Right
-                        if (m_inputManager.runRight)
-                        {
-                            m_rigidbody.velocity += transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
-                        }
-
-                        //Left
-                        else if (m_inputManager.runLeft)
-                        {
-                            m_rigidbody.velocity += transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
-                        }
-
-                        //Forward
-                        else if (m_inputManager.runForward)
-                        {
-                            m_rigidbody.velocity += transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
-                        }
-
-                        //Back
-                        else if (m_inputManager.runBack)
-                        {
-                            m_rigidbody.velocity += transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
-                        }
+                        m_rigidbody.velocity += transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
                     }
-                    #endregion
 
-                    #region Walk
-                    else
+                    //Left
+                    else if (m_inputManager.runLeft)
                     {
-                        //m_animator.Play("Walk");
-                        speed = walkspeed;
-
-                        //Right
-                        if (m_inputManager.runRight)
-                        {
-                            m_rigidbody.velocity += transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
-                        }
-
-                        //Left
-                        if (m_inputManager.runLeft)
-                        {
-                            m_rigidbody.velocity += transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
-                        }
-
-                        //Forward
-                        if (m_inputManager.runForward)
-                        {
-                            m_rigidbody.velocity += transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
-                        }
-
-                        //Back
-                        if (m_inputManager.runBack)
-                        {
-                            m_rigidbody.velocity += transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
-                        }
+                        m_rigidbody.velocity += transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
                     }
-                    #endregion
-                }
-                else
-                {
-                    m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+
+                    //Forward
+                    else if (m_inputManager.runForward)
+                    {
+                        m_rigidbody.velocity += transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
+                    }
+
+                    //Back
+                    else if (m_inputManager.runBack)
+                    {
+                        m_rigidbody.velocity += transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
+                    }
                 }
                 #endregion
 
-                //Attack
-                #region Attack
-                if (m_inputManager.attack)
+                #region Walk
+                else
+                {
+                    //m_animator.Play("Walk");
+                    speed = walkspeed;
+
+                    //Right
+                    if (m_inputManager.runRight)
+                    {
+                        m_rigidbody.velocity += transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
+                    }
+
+                    //Left
+                    if (m_inputManager.runLeft)
+                    {
+                        m_rigidbody.velocity += transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
+                    }
+
+                    //Forward
+                    if (m_inputManager.runForward)
+                    {
+                        m_rigidbody.velocity += transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
+                    }
+
+                    //Back
+                    if (m_inputManager.runBack)
+                    {
+                        m_rigidbody.velocity += transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
+                    }
+                }
+                #endregion
+            }
+            else
+            {
+                m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            }
+            #endregion
+
+            //Attack
+            #region Attack
+            /*if (m_inputManager.attack)
             {
                 //m_animator.Play("Attack");
                 m_state = PlayerManager.State.Attack;
             }
-
             break;
 
            
