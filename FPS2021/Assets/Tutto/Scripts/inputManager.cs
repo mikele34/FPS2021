@@ -8,6 +8,7 @@ public class inputManager : MonoBehaviour
     [HideInInspector] public bool runForward = false;
     [HideInInspector] public bool runBack = false;
     [HideInInspector] public bool walk = false;
+    [HideInInspector] public bool jump = false;
     [HideInInspector] public bool crouch = false;
     [HideInInspector] public bool attack = false;
     [HideInInspector] public bool interact = false;
@@ -24,6 +25,7 @@ public class inputManager : MonoBehaviour
         bool GP_downdpad = false;
         bool GP_shoot = false;
         bool GP_walk = false;
+        bool GP_jump = false;
         bool GP_crounch = false;
         bool GP_interact = false;
         bool GP_escape = false;
@@ -35,12 +37,12 @@ public class inputManager : MonoBehaviour
             GP_rightdpad = Gamepad.all[0].dpad.right.isPressed;
             GP_updpad = Gamepad.all[0].dpad.up.isPressed;
             GP_downdpad = Gamepad.all[0].dpad.down.isPressed;
-            GP_walk = Gamepad.all[0].aButton.isPressed;
-            GP_crounch = Gamepad.all[0].leftStickButton.isPressed;
+            GP_walk = Gamepad.all[0].leftStickButton.isPressed;
+            GP_jump = Gamepad.all[0].aButton.isPressed;
+            GP_crounch = Gamepad.all[0].leftShoulder.isPressed;
 
-            GP_shoot = Gamepad.all[0].xButton.wasPressedThisFrame;
+            GP_shoot = Gamepad.all[0].rightTrigger.isPressed;
             GP_interact = Gamepad.all[0].bButton.wasPressedThisFrame;
-            GP_interact = Gamepad.all[0].startButton.wasPressedThisFrame;
         }
         #endregion
 
