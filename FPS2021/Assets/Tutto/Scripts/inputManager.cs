@@ -98,6 +98,16 @@ public class inputManager : MonoBehaviour
         {
             walk = false;
         }
+        
+        //Jump
+        if (Keyboard.current.spaceKey.wasPressedThisFrame || GP_jump)
+        {
+            jump = true;
+        }
+        else
+        {
+            jump = false;
+        }
 
         //Crouch
         if (Keyboard.current.leftCtrlKey.isPressed || GP_rightdpad)
