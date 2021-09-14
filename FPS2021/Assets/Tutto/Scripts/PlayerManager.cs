@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
+    #region VarStateMachine
     enum State
     {
         Move,
@@ -13,10 +14,13 @@ public class PlayerManager : MonoBehaviour
     }
 
     PlayerManager.State m_state = PlayerManager.State.Move;
+    #endregion
 
-    //public EnemyManager enemyManager;
-    //public SceneFader sceneFader;
+    //Variable
+    #region Variable
 
+    //Header
+    #region Header
     [Header("Movement")]
     public float walkspeed = 300.0f;
     public float runspeed = 350.0f;
@@ -30,17 +34,24 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Camera Settings")]
     public Transform mainCamera;
+    float m_RotX = 0.0f;
+    #endregion
 
-    int m_hitPoint = 0;
+    //Int
+    #region Int
+    //int m_hitPoint = 0;
+    #endregion
 
-    public bool interact = false;
+    //Bool
+    #region Bool
+    bool death = false;
+    #endregion
 
     Rigidbody m_rigidbody;
     inputManager m_inputManager;
-
-    public bool death = false;
-
-    float m_RotX = 0.0f;
+    //public EnemyManager enemyManager;
+    //public SceneFader sceneFader;
+    #endregion
 
     void Awake()
     {
@@ -54,13 +65,15 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        // Rotazione corpo
+        #region Rotation
+        // Body Rotation
         transform.Rotate(0.0f, Input.GetAxis("Mouse X") * mouseSensitivity, 0.0f);
         
-        // Rotazione testa
+        // Head Rotation
         m_RotX = m_RotX + -Input.GetAxis("Mouse Y") * mouseSensitivity;
         m_RotX = Mathf.Clamp(m_RotX, -50.0f, 50.0f);
         mainCamera.localEulerAngles = new Vector3(m_RotX, 0.0f, 0.0f);
+        #endregion
 
         #region StateMachine
         switch (m_state)
@@ -70,7 +83,7 @@ public class PlayerManager : MonoBehaviour
 
                 //Moviment
                 #region Moviment
-                if (m_inputManager.runLeft || m_inputManager.runRight || m_inputManager.runUp || m_inputManager.runDown)
+                if (m_inputManager.runLeft || m_inputManager.runRight || m_inputManager.runForward || m_inputManager.runBack)
                 {
                     #region Run
                     if (!m_inputManager.walk)
