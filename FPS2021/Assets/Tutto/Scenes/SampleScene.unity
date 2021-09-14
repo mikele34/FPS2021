@@ -313,7 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkspeed: 100
   runspeed: 150
-  jumpForce: 1000
+  jumpForce: 1000000
   shotRatio: 0.2
   mouseSensitivity: 10
   mainCamera: {fileID: 1927735023}
