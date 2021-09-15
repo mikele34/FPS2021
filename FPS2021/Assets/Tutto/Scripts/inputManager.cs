@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class inputManager : MonoBehaviour
 {
+    #region Variable
     [HideInInspector] public bool runRight = false;
     [HideInInspector] public bool runLeft = false;
     [HideInInspector] public bool runForward = false;
@@ -13,7 +14,7 @@ public class inputManager : MonoBehaviour
     [HideInInspector] public bool attack = false;
     [HideInInspector] public bool interact = false;
     [HideInInspector] public bool pause = false;
-    
+    #endregion
 
     void Update()
     {
