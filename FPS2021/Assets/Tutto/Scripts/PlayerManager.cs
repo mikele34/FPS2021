@@ -227,6 +227,11 @@ public class PlayerManager : MonoBehaviour
         #endregion
     }
 
+    void FixedUpdate()
+    {
+        m_rigidbody.AddForce(Physics.gravity * (m_rigidbody.mass * m_rigidbody.mass));
+    }
+
     /*void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Enemy")
