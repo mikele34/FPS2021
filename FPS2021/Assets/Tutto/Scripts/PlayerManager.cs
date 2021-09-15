@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
@@ -112,25 +111,25 @@ public class PlayerManager : MonoBehaviour
                     //Right
                     if (m_inputManager.runRight)
                     {
-                        m_rigidbody.velocity += transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
                     }
 
                     //Left
                     else if (m_inputManager.runLeft)
                     {
-                        m_rigidbody.velocity += transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
                     }
 
                     //Forward
                     else if (m_inputManager.runForward)
                     {
-                        m_rigidbody.velocity += transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
                     }
 
                     //Back
                     else if (m_inputManager.runBack)
                     {
-                        m_rigidbody.velocity += transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
                     }
                 }
                 #endregion
@@ -144,25 +143,25 @@ public class PlayerManager : MonoBehaviour
                     //Right
                     if (m_inputManager.runRight)
                     {
-                        m_rigidbody.velocity += transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
                     }
 
                     //Left
                     if (m_inputManager.runLeft)
                     {
-                        m_rigidbody.velocity += transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
                     }
 
                     //Forward
                     if (m_inputManager.runForward)
                     {
-                        m_rigidbody.velocity += transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
                     }
 
                     //Back
                     if (m_inputManager.runBack)
                     {
-                        m_rigidbody.velocity += transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
                     }
                 }
                 #endregion
@@ -229,7 +228,9 @@ public class PlayerManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        #region Gravity
         m_rigidbody.AddForce(Physics.gravity * (m_rigidbody.mass * m_rigidbody.mass));
+        #endregion
     }
 
     /*void OnCollisionEnter(Collision collision)
