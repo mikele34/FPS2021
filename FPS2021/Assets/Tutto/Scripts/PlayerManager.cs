@@ -81,14 +81,12 @@ public class PlayerManager : MonoBehaviour
 
         if(Physics.Raycast(transform.position, Vector3.down, 2.1f, layerMask) && m_inputManager.jump)
         {
-            m_rigidbody.AddForce(new Vector3(transform.position.x, jumpForce, transform.position.z));
+            //m_rigidbody.AddForce(0, jumpForce, 0, ForceMode.Impulse);
+
+            m_rigidbody.AddForce(Vector3.up * jumpForce);
 
             Debug.DrawRay(transform.position, Vector3.down, Color.blue);
             Debug.Log("Ground");
-        }
-        else
-        {
-
         }
         #endregion
 
