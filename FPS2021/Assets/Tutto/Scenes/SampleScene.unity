@@ -488,9 +488,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0dbd3a0eb786f1418858c575e6d3b4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkspeed: 8000
-  runspeed: 15000
-  jumpForce: 350000
+  walkspeed: 4000
+  runspeed: 7500
+  jumpForce: 300
   shotRatio: 0.2
   mouseSensitivity: 10
   mainCamera: {fileID: 1927735023}
