@@ -45,7 +45,12 @@ public class PlayerManager : MonoBehaviour
 
     //Bool
     #region Bool
-    bool death = false;
+    bool m_death = false;
+    #endregion
+
+    //Vector
+    #region Vector3
+    Vector3 m_velocity;
     #endregion
 
     Rigidbody m_rigidbody;
@@ -80,10 +85,8 @@ public class PlayerManager : MonoBehaviour
         #region Jump
 
         if(Physics.Raycast(transform.position, Vector3.down, 2.1f, layerMask) && m_inputManager.jump)
-        {
-            //m_rigidbody.AddForce(0, jumpForce, 0, ForceMode.Impulse);
-
-            m_rigidbody.AddForce(Vector3.up * jumpForce);
+        {            
+            m_rigidbody.AddForce(transform.up * jumpForce);
 
             Debug.DrawRay(transform.position, Vector3.down, Color.blue);
             Debug.Log("Ground");
@@ -209,7 +212,7 @@ public class PlayerManager : MonoBehaviour
             #region Death
             case PlayerManager.State.Death:
 
-                death = true;
+                m_death = true;
 
                 SceneManager.LoadScene("SampleScene");
 
