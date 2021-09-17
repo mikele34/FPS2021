@@ -40,20 +40,26 @@ public class PlayerManager : MonoBehaviour
     //Int
     #region Int
     //int m_hitPoint = 0;
-    int layerMask = 1 << 6;    
+    int layerMask = 1 << 6;
+    #endregion
+
+    //Float
+    #region Float
     #endregion
 
     //Bool
     #region Bool
     bool m_death = false;
+    bool m_crouch = false;
     #endregion
 
     //Vector
     #region Vector3
-    Vector3 m_velocity;
+    
     #endregion
 
     Rigidbody m_rigidbody;
+    CapsuleCollider m_capsuleCollider;
     inputManager m_inputManager;
     //public EnemyManager enemyManager;
     //public SceneFader sceneFader;
@@ -67,6 +73,7 @@ public class PlayerManager : MonoBehaviour
         m_inputManager = GameObject.Find("inputManager").GetComponent<inputManager>();
 
         m_rigidbody = GetComponent<Rigidbody>();
+        m_capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
 
@@ -84,12 +91,27 @@ public class PlayerManager : MonoBehaviour
 
         #region Jump
 
-        if(Physics.Raycast(transform.position, Vector3.down, 2.1f, layerMask) && m_inputManager.jump)
-        {            
+        if (Physics.Raycast(transform.position, Vector3.down, 2.1f, layerMask) && m_inputManager.jump)
+        {
             m_rigidbody.AddForce(transform.up * jumpForce);
 
             Debug.DrawRay(transform.position, Vector3.down, Color.blue);
             Debug.Log("Ground");
+        }
+        #endregion
+
+        #region Crouch
+        if (!m_crouch && m_inputManager.crouch)
+        {
+            mainCamera.position = new Vector3(mainCamera.position.x, mainCamera.position.y * 0.5f, mainCamera.position.z);
+
+            m_crouch = true;
+        }
+        else if (m_crouch && !m_inputManager.crouch)
+        {
+            mainCamera.position = new Vector3(mainCamera.position.x, mainCamera.position.y * 2f, mainCamera.position.z);
+
+            m_crouch = false;
         }
         #endregion
 

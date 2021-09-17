@@ -27,7 +27,7 @@ public class inputManager : MonoBehaviour
         bool GP_shoot = false;
         bool GP_walk = false;
         bool GP_jump = false;
-        bool GP_crounch = false;
+        bool GP_crouch = false;
         bool GP_interact = false;
         bool GP_escape = false;
         
@@ -40,7 +40,7 @@ public class inputManager : MonoBehaviour
             GP_downdpad = Gamepad.all[0].dpad.down.isPressed;
             GP_walk = Gamepad.all[0].leftStickButton.isPressed;
             GP_jump = Gamepad.all[0].aButton.isPressed;
-            GP_crounch = Gamepad.all[0].leftShoulder.isPressed;
+            GP_crouch = Gamepad.all[0].leftShoulder.isPressed;
 
             GP_shoot = Gamepad.all[0].rightTrigger.isPressed;
             GP_interact = Gamepad.all[0].bButton.wasPressedThisFrame;
@@ -111,7 +111,7 @@ public class inputManager : MonoBehaviour
         }
 
         //Crouch
-        if (Keyboard.current.leftCtrlKey.isPressed || GP_rightdpad)
+        if (Keyboard.current.leftCtrlKey.isPressed || GP_crouch)
         {
             crouch = true;
         }
