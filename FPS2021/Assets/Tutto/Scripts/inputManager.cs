@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class inputManager : MonoBehaviour
 {
     #region Variable
+    [HideInInspector] public bool moviment = false;
     [HideInInspector] public bool runRight = false;
     [HideInInspector] public bool runLeft = false;
     [HideInInspector] public bool runForward = false;
@@ -54,40 +55,48 @@ public class inputManager : MonoBehaviour
         if (Keyboard.current.dKey.isPressed || GP_rightdpad)
         {
             runRight = true;
+            moviment = true;
         }
         else
         {
             runRight = false;
+            moviment = false;
         }
 
         //Left
         if (Keyboard.current.aKey.isPressed || GP_leftdpad)
         {
             runLeft = true;
+            moviment = true;
         }
         else
         {
             runLeft = false;
+            moviment = false;
         }
 
         //Up
         if (Keyboard.current.wKey.isPressed || GP_updpad)
         {
             runForward = true;
+            moviment = true;
         }
         else
         {
             runForward = false;
+            moviment = false;
         }
 
         //Down
         if (Keyboard.current.sKey.isPressed || GP_downdpad)
         {
             runBack = true;
+            moviment = true;
         }
         else
         {
             runBack = false;
+            moviment = false;
         }
 
         //Walk

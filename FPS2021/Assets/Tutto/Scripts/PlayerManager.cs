@@ -22,9 +22,10 @@ public class PlayerManager : MonoBehaviour
     #region Header
     [Header("Movement")]
     public float walkspeed = 300.0f;
+    public float crouchspeed = 150.0f;
     public float runspeed = 350.0f;
     public int jumpForce = 100;
-    float speed = 300.0f;
+    float m_speed = 300.0f;
 
     [Header("Shooting")]
     public float shotRatio = 0.2f;
@@ -55,8 +56,13 @@ public class PlayerManager : MonoBehaviour
 
     //Vector
     #region Vector3
-    
+
     #endregion
+
+
+    public float speed;
+    public float speedPerSecond;
+    public Vector3 oldPosition;
 
     Rigidbody m_rigidbody;
     CapsuleCollider m_capsuleCollider;
@@ -74,11 +80,26 @@ public class PlayerManager : MonoBehaviour
 
         m_rigidbody = GetComponent<Rigidbody>();
         m_capsuleCollider = GetComponent<CapsuleCollider>();
+
+        m_speed = runspeed;
     }
 
 
     void Update()
     {
+        #region SpeedDisplay
+        /*speed = Vector3.Distance(oldPosition, transform.position);
+        speedPerSecond = Vector3.Distance(oldPosition, transform.position) / Time.deltaTime;
+        oldPosition = transform.position;
+        Debug.Log("Speed: " + speed.ToString("F2"));*/
+        #endregion
+
+        Debug.Log(m_speed);
+
+        #region SpeedRegolation
+        Speed();
+        #endregion
+
         #region Rotation
         // Body Rotation
         transform.Rotate(0.0f, Input.GetAxis("Mouse X") * mouseSensitivity, 0.0f);
@@ -103,12 +124,14 @@ public class PlayerManager : MonoBehaviour
         #region Crouch
         if (!m_crouch && m_inputManager.crouch)
         {
+            //m_capsuleCollider =;
             mainCamera.position = new Vector3(mainCamera.position.x, mainCamera.position.y * 0.5f, mainCamera.position.z);
 
             m_crouch = true;
         }
         else if (m_crouch && !m_inputManager.crouch)
         {
+            //
             mainCamera.position = new Vector3(mainCamera.position.x, mainCamera.position.y * 2f, mainCamera.position.z);
 
             m_crouch = false;
@@ -129,30 +152,29 @@ public class PlayerManager : MonoBehaviour
                 if (!m_inputManager.walk)
                 {
                     //m_animator.Play("Run");
-                    speed = runspeed;
 
                     //Right
                     if (m_inputManager.runRight)
                     {
-                        m_rigidbody.velocity = transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.right) * m_speed * Time.deltaTime;
                     }
 
                     //Left
                     else if (m_inputManager.runLeft)
                     {
-                        m_rigidbody.velocity = transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.left) * m_speed * Time.deltaTime;
                     }
 
                     //Forward
                     else if (m_inputManager.runForward)
                     {
-                        m_rigidbody.velocity = transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.forward) * m_speed * Time.deltaTime;
                     }
 
                     //Back
                     else if (m_inputManager.runBack)
                     {
-                        m_rigidbody.velocity = transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.back) * m_speed * Time.deltaTime;
                     }
                 }
                 #endregion
@@ -161,30 +183,29 @@ public class PlayerManager : MonoBehaviour
                 else
                 {
                     //m_animator.Play("Walk");
-                    speed = walkspeed;
 
                     //Right
                     if (m_inputManager.runRight)
                     {
-                        m_rigidbody.velocity = transform.TransformDirection(Vector3.right) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.right) * m_speed * Time.deltaTime;
                     }
 
                     //Left
                     if (m_inputManager.runLeft)
                     {
-                        m_rigidbody.velocity = transform.TransformDirection(Vector3.left) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.left) * m_speed * Time.deltaTime;
                     }
 
                     //Forward
                     if (m_inputManager.runForward)
                     {
-                        m_rigidbody.velocity = transform.TransformDirection(Vector3.forward) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.forward) * m_speed * Time.deltaTime;
                     }
 
                     //Back
                     if (m_inputManager.runBack)
                     {
-                        m_rigidbody.velocity = transform.TransformDirection(Vector3.back) * speed * Time.deltaTime;
+                        m_rigidbody.velocity = transform.TransformDirection(Vector3.back) * m_speed * Time.deltaTime;
                     }
                 }
                 #endregion
@@ -254,6 +275,24 @@ public class PlayerManager : MonoBehaviour
         #region Gravity
         m_rigidbody.AddForce(Physics.gravity * (m_rigidbody.mass * m_rigidbody.mass));
         #endregion
+    }
+
+    void Speed()
+    {
+        if(m_inputManager.moviment && !m_inputManager.walk && !m_inputManager.crouch)
+        {
+            m_speed = runspeed;
+        }
+        else if (!m_inputManager.moviment && m_inputManager.walk && !m_inputManager.crouch)
+        {
+            m_speed = walkspeed;
+        }
+        else if(!m_inputManager.moviment && !m_inputManager.walk && m_inputManager.crouch)
+        {
+            m_speed = crouchspeed;
+        }
+
+
     }
 
     /*void OnCollisionEnter(Collision collision)

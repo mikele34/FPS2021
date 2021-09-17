@@ -489,11 +489,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkspeed: 4000
+  crouchspeed: 2000
   runspeed: 7500
   jumpForce: 1200000
   shotRatio: 0.2
   mouseSensitivity: 10
   mainCamera: {fileID: 1927735023}
+  speed: 0
+  speedPerSecond: 0
+  oldPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &787407047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4027921456651832, guid: 91d71eb7df97bd444a84c6ac3929ba7f, type: 3}
@@ -528,6 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 318ad75ffc40a084c8d35afbbee11434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moviment: 0
   runRight: 0
   runLeft: 0
   runForward: 0
